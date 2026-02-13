@@ -302,11 +302,11 @@
           <div class="card" id="export">
             <h2>5) Export & communicatie</h2>
             <p>Bundel alles in één duidelijke output: zorgplan + afspraken + contactpersonen. Klaar om te delen met patiënt/naasten en eerstelijnspartners.</p>
-            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
-              <a class="btn primary" href="#">Genereer PDF zorgplan</a>
-              <a class="btn" href="#">Mail naar partners</a>
-              <a class="btn" href="#">Opslaan in dossier</a>
-            </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
+  <button class="btn primary" type="button" onclick="exportZorgplanPDF()">Print / PDF</button>
+  <button class="btn" type="button" onclick="downloadZorgplanHTML()">Download HTML</button>
+  <button class="btn" type="button" onclick="downloadZorgplanJSON()">Download JSON</button>
+</div>
           </div>
 
         </div>
