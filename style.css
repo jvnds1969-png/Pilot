@@ -29,3 +29,35 @@
     opacity:.9;
   }
 </style>
+/* --- Contact visualisatie: enkel binnen #matching --- */
+#matching .contactline{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:8px;
+}
+
+#matching .contactchip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid rgba(15,37,58,.10);
+  background:rgba(248,251,255,.78);
+  font-size:12.6px;
+  color:var(--muted);
+  width:fit-content;
+}
+
+#matching .contactchip svg{
+  width:14px;
+  height:14px;
+  opacity:.9;
+}
+
+#matching .contactchip a{
+  color:var(--accent2);
+  font-weight:700;
+  text-decoration:none;
+}
