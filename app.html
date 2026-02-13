@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zorgstart Platform</title>
+
+<style>
+:root{
+  --accent:#1faacd;
+  --accent2:#165b72;
+  --bg:#f4f7fb;
+}
+
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:var(--bg);
+  color:#0f253a;
+}
+
+.header{
+  background:white;
+  padding:20px;
+  box-shadow:0 2px 10px rgba(0,0,0,.08);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.header a{
+  text-decoration:none;
+  color:var(--accent2);
+  font-weight:bold;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:30px 20px;
+}
+
+.title{
+  font-size:28px;
+  margin-bottom:10px;
+}
+
+.subtitle{
+  color:#666;
+  margin-bottom:30px;
+}
+
+.card{
+  background:white;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+  margin-bottom:20px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+}
+
+.btn{
+  display:inline-block;
+  padding:12px 18px;
+  background:var(--accent);
+  color:white;
+  border-radius:8px;
+  text-decoration:none;
+  margin-top:10px;
+}
+
+.patient{
+  padding:15px;
+  border:1px solid #eee;
+  border-radius:10px;
+  margin-top:10px;
+}
+.risk{font-weight:bold;}
+.red{color:#c0392b;}
+.orange{color:#e67e22;}
+.green{color:#27ae60;}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div><strong>Zorgstart Platform (demo)</strong></div>
+  <div>
+    <a href="index.html">Home</a> |
+    <a href="pilot.html">Piloot</a> |
+    <a href="case.html">Casus</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="title">Dashboard ontslagdossiers</div>
+  <div class="subtitle">
+    Digitale ondersteuning voor sociale dienst en ontslagplanning.
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>Wat doet Zorgstart?</h3>
+      <ul>
+        <li>Analyse ontslagbrieven</li>
+        <li>Triage ontslagcomplexiteit</li>
+        <li>Voorstel zorgbundels</li>
+        <li>Matching met eerste lijn</li>
+      </ul>
+      <a class="btn" href="case.html">Nieuw dossier openen</a>
+    </div>
+
+    <div class="card">
+      <h3>Intelligentielaag</h3>
+      <ul>
+        <li>Automatische document analyse</li>
+        <li>Complexiteit score</li>
+        <li>Prioritering dossiers</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h3>Actieve dossiers</h3>
+
+    <div class="patient">
+      <strong>Mevr. Janssens (84)</strong><br>
+      Geriatrie – Polyfarmacie<br>
+      Complexiteit: <span class="risk orange">ORANJE</span><br>
+      <a class="btn" href="case.html">Open dossier</a>
+    </div>
+
+    <div class="patient">
+      <strong>Dhr. Peeters (76)</strong><br>
+      Heupfractuur – wondzorg<br>
+      Complexiteit: <span class="risk red">ROOD</span><br>
+      <a class="btn" href="case.html">Open dossier</a>
+    </div>
+
+    <div class="patient">
+      <strong>Mevr. Martens (63)</strong><br>
+      Eenvoudig ontslag<br>
+      Complexiteit: <span class="risk green">GROEN</span><br>
+      <a class="btn" href="case.html">Open dossier</a>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
