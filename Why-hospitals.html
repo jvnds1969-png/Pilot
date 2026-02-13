@@ -1,0 +1,370 @@
+<!--
+Maak een NIEUWE pagina: why-hospitals.html
+Plaats dit bestand naast index.html / pilot.html / app.html / case.html
+En voeg in index.html een link toe: href="why-hospitals.html"
+-->
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zorgstart — Why hospitals care</title>
+  <meta name="description" content="Zorgstart: strategische waarde voor ziekenhuizen (ligduur, bedrotatie, sociale dienst, eerste lijn)." />
+
+  <style>
+    :root{
+      --bg:#f3f6fb; --text:#0f253a; --muted:#5b6b7a;
+      --border:rgba(15,37,58,.10); --shadow:0 16px 40px rgba(15,37,58,.10);
+      --accent:#1faacd; --accent2:#165b72; --warm:#f97316; --ok:#22c55e;
+      --radius:18px; --max:1120px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:var(--font); color:var(--text);
+      background:
+        radial-gradient(900px 450px at 12% -10%, rgba(31,170,205,.16), transparent 60%),
+        radial-gradient(800px 400px at 92% 0%, rgba(249,115,22,.12), transparent 55%),
+        linear-gradient(180deg,#eef3fb,var(--bg));
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:26px 18px 54px}
+
+    /* Topbar */
+    .topbar{display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:16px; flex-wrap:wrap}
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      padding:10px 12px; border:1px solid var(--border); border-radius:999px;
+      background:rgba(255,255,255,.65); backdrop-filter: blur(8px);
+    }
+    .logo{
+      width:34px; height:34px; border-radius:10px; position:relative;
+      background:linear-gradient(135deg,var(--accent),rgba(31,170,205,.35));
+      box-shadow:0 10px 20px rgba(31,170,205,.25);
+    }
+    .logo:after{content:""; position:absolute; inset:9px; border-radius:8px; border:2px solid rgba(255,255,255,.85)}
+    .brand strong{font-size:14px}
+    .brand span{display:block; font-size:12px; color:var(--muted); margin-top:1px}
+
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px; border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.65);
+      font-size:12px; color:var(--muted);
+      white-space:nowrap;
+    }
+    .dot{width:9px;height:9px;border-radius:999px;background:var(--ok);box-shadow:0 0 0 5px rgba(34,197,94,.14)}
+
+    /* Layout */
+    .grid{
+      display:grid;
+      grid-template-columns: 300px 1fr;
+      gap:16px;
+      align-items:start;
+    }
+    @media(max-width: 980px){ .grid{grid-template-columns:1fr;} }
+
+    /* Sidebar */
+    .sidebar{
+      border:1px solid var(--border);
+      border-radius:22px;
+      background:rgba(255,255,255,.70);
+      backdrop-filter: blur(8px);
+      box-shadow:0 12px 28px rgba(15,37,58,.06);
+      padding:14px;
+      position: sticky;
+      top: 12px;
+      height: fit-content;
+    }
+    .navtitle{
+      font-size:12px; color:var(--muted);
+      margin: 4px 6px 10px;
+      letter-spacing:.2px; text-transform: uppercase;
+    }
+    .nav{display:grid; gap:8px}
+    .nav a{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:10px 12px; border-radius:14px;
+      border:1px solid rgba(15,37,58,.10);
+      background:rgba(248,251,255,.78);
+      font-size:13px;
+    }
+    .nav small{color:var(--muted)}
+    .arrow{
+      width:28px;height:28px;border-radius:12px; display:grid; place-items:center;
+      background:rgba(31,170,205,.10);
+      border:1px solid rgba(31,170,205,.18);
+      color:var(--accent2);
+      flex:0 0 auto;
+    }
+    .hint{
+      margin-top:12px; padding:12px; border-radius:16px;
+      border:1px solid rgba(31,170,205,.18); background:rgba(31,170,205,.08);
+      color:var(--accent2); font-size:12.6px; line-height:1.45;
+    }
+
+    /* Main card */
+    .card{
+      border:1px solid var(--border);
+      border-radius:22px;
+      background:rgba(255,255,255,.82);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .hd{
+      padding:18px; border-bottom:1px solid var(--border);
+      background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(255,255,255,.72));
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+    }
+    .hd h1{margin:0; font-size:18px; letter-spacing:-.2px}
+    .tag{
+      font-size:12px; padding:7px 10px; border-radius:999px;
+      background:rgba(249,115,22,.10); border:1px solid rgba(249,115,22,.20);
+      color:#8a3b02; white-space:nowrap;
+    }
+    .bd{padding:18px}
+
+    /* Sections */
+    .section{margin-top:14px}
+    .section h2{
+      margin:0 0 8px;
+      font-size:13px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--accent2);
+    }
+    .lead{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+      max-width:78ch;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(2,1fr);
+      gap:12px;
+      margin-top:12px;
+    }
+    @media(max-width: 980px){ .cards{grid-template-columns:1fr;} }
+    .kcard{
+      border:1px solid rgba(15,37,58,.10);
+      background:rgba(248,251,255,.80);
+      border-radius:18px;
+      padding:14px;
+    }
+    .kcard h3{margin:0 0 6px; font-size:14px}
+    .kcard p{margin:0; color:var(--muted); font-size:13px; line-height:1.55}
+    .bullets{margin:10px 0 0; padding-left:18px; font-size:13px; line-height:1.55}
+
+    .impact{
+      display:grid;
+      grid-template-columns: repeat(3,1fr);
+      gap:10px;
+      margin-top:12px;
+    }
+    @media(max-width: 980px){ .impact{grid-template-columns:1fr;} }
+    .ibox{
+      border:1px solid rgba(34,197,94,.28);
+      background:rgba(34,197,94,.08);
+      border-radius:18px;
+      padding:14px;
+    }
+    .ibox b{display:block; margin-bottom:6px}
+    .ibox .big{font-size:18px; font-weight:900; letter-spacing:-.2px}
+    .ibox small{color:var(--muted)}
+
+    .table{
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+    }
+    .row{
+      display:grid;
+      grid-template-columns: 1.1fr 1.9fr;
+      gap:10px;
+      padding:12px;
+      border-radius:18px;
+      border:1px solid rgba(15,37,58,.10);
+      background:rgba(255,255,255,.78);
+    }
+    @media(max-width: 980px){ .row{grid-template-columns:1fr;} }
+    .row b{font-size:13px}
+    .row span{color:var(--muted); font-size:13px; line-height:1.55}
+
+    .footer{
+      margin-top:16px;
+      display:flex; flex-wrap:wrap; gap:10px;
+      align-items:center; justify-content:space-between;
+      color:var(--muted); font-size:12px;
+      padding:8px 2px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px; border-radius:14px;
+      border:1px solid rgba(15,37,58,.12);
+      background:rgba(255,255,255,.85);
+      font-size:13px;
+    }
+    .btn.primary{
+      background:linear-gradient(135deg,var(--accent),rgba(31,170,205,.65));
+      border-color:rgba(31,170,205,.35);
+      color:#fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div class="topbar">
+      <a class="brand" href="index.html">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <strong>Zorgstart</strong>
+          <span>Why hospitals care</span>
+        </div>
+      </a>
+      <div class="pill"><span class="dot" aria-hidden="true"></span>Doorstroom • ligduur • eerste lijn</div>
+    </div>
+
+    <div class="grid">
+      <!-- Sidebar nav -->
+      <aside class="sidebar">
+        <div class="navtitle">Navigatie</div>
+        <nav class="nav" aria-label="Zorgstart pagina’s">
+          <a href="index.html"><div><b>Home</b><br><small>Overzicht</small></div><div class="arrow">↗</div></a>
+          <a href="why-hospitals.html"><div><b>Why hospitals care</b><br><small>Waarde</small></div><div class="arrow">↗</div></a>
+          <a href="pilot.html"><div><b>Pilootvoorstel</b><br><small>One-pager</small></div><div class="arrow">↗</div></a>
+          <a href="app.html"><div><b>Platform mock</b><br><small>Dashboard</small></div><div class="arrow">↗</div></a>
+          <a href="case.html"><div><b>Casus flow</b><br><small>Intake → matching</small></div><div class="arrow">↗</div></a>
+        </nav>
+
+        <div class="hint">
+          <b>Gebruik in overleg:</b> start hier (waarde), ga dan naar <b>Piloot</b>, en eindig met de <b>Platform mock</b>.
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <main class="card">
+        <div class="hd">
+          <h1>Waarom ziekenhuizen Zorgstart willen</h1>
+          <span class="tag">bestuurstaal • direct impact</span>
+        </div>
+
+        <div class="bd">
+          <div class="section">
+            <h2>De uitdaging</h2>
+            <p class="lead">
+              Ziekenhuizen ervaren structurele druk op capaciteit: patiënten blijven te lang liggen omdat ontslag naar huis
+              organisatorisch vastloopt. Sociale diensten zitten op limiet, doorverwijzing naar eerste lijn verloopt manueel
+              en doorstroom (incl. spoed) blokkeert.
+            </p>
+          </div>
+
+          <div class="section">
+            <h2>Zorgstart in één zin</h2>
+            <p class="lead">
+              Zorgstart digitaliseert en versnelt het ontslagproces naar de eerste lijn: documenten → triage → zorgbundels → matching → doorverwijzing.
+              <b>Mens beslist, tool ondersteunt.</b>
+            </p>
+          </div>
+
+          <div class="section">
+            <h2>Wat verandert concreet?</h2>
+            <div class="cards">
+              <div class="kcard">
+                <h3>Vandaag</h3>
+                <p>Veel tijd gaat naar administratieve coördinatie.</p>
+                <ul class="bullets">
+                  <li>dossiers lezen</li>
+                  <li>bellen en mailen</li>
+                  <li>wachten & opvolgen</li>
+                  <li>zorg zoeken per patiënt</li>
+                </ul>
+              </div>
+              <div class="kcard">
+                <h3>Met Zorgstart</h3>
+                <p>Gestandaardiseerd proces met digitale ondersteuning.</p>
+                <ul class="bullets">
+                  <li>upload bestaande documenten</li>
+                  <li>automatische analyse & triage</li>
+                  <li>zorgbundels & matching</li>
+                  <li>snelle doorverwijzing</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Strategische impact</h2>
+            <div class="impact">
+              <div class="ibox">
+                <b>Kortere ligduur</b>
+                <div class="big">–0,5 tot –1 dag</div>
+                <small>voor geselecteerde doelgroep</small>
+              </div>
+              <div class="ibox">
+                <b>Hogere bedrotatie</b>
+                <div class="big">meer opnames</div>
+                <small>zonder extra bedden</small>
+              </div>
+              <div class="ibox">
+                <b>Sociale dienst ontlast</b>
+                <div class="big">focus shift</div>
+                <small>naar complex casemanagement</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Waarop sturen we?</h2>
+            <div class="table">
+              <div class="row">
+                <b>Doorstroom & spoed</b>
+                <span>sneller ontslag → bed vrij → minder boarding → betere flow</span>
+              </div>
+              <div class="row">
+                <b>Efficiëntie sociale dienst</b>
+                <span>minder manueel werk; meer tijd voor psychosociale begeleiding en complexe dossiers</span>
+              </div>
+              <div class="row">
+                <b>Samenwerking eerste lijn</b>
+                <span>één duidelijk zorgplan + contactpersonen + korte doorverwijslijnen</span>
+              </div>
+              <div class="row">
+                <b>Transmurale & geïntegreerde zorg</b>
+                <span>digitale brug die past binnen transmurale zorgpaden en geïntegreerde zorg</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Pilootopzet Vlaanderen</h2>
+            <div class="kcard">
+              <p style="margin:0; color:var(--muted); font-size:13px; line-height:1.55">
+                Netwerk van referentieziekenhuizen (1 per provincie): <b>ZAS</b> (Antwerpen), <b>VITAZ</b> (Oost-Vlaanderen),
+                <b>AZ Oostende</b> (West-Vlaanderen), <b>ZOL</b> (Limburg), <b>RZ Tienen</b> (Vlaams-Brabant).<br/>
+                Startdiensten: <b>geriatrie</b>, <b>orthopedie</b>, <b>revalidatie</b>.
+              </p>
+            </div>
+          </div>
+
+          <div class="footer">
+            <span>Volgende: koppel dit aan je pilootpagina + platform demo.</span>
+            <div style="display:flex; gap:10px; flex-wrap:wrap">
+              <a class="btn" href="pilot.html">Ga naar pilootvoorstel →</a>
+              <a class="btn primary" href="app.html">Open platform mock →</a>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+
+  </div>
+</body>
+</html>
