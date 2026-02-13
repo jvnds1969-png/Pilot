@@ -19,97 +19,33 @@
   --border:rgba(15,37,58,.10);
 }
 
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-
+body{margin:0;font-family:Arial;background:var(--bg);color:var(--text)}
 .wrap{max-width:1000px;margin:auto;padding:20px}
-
-/* NAV */
-.btn{
-  display:inline-block;
-  padding:10px 14px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  background:white;
-  text-decoration:none;
-  font-size:13px;
-}
+.btn{display:inline-block;padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:white;text-decoration:none;font-size:13px}
 .btn.primary{background:var(--accent);color:white;border:none}
-
-/* PANEL */
 .panel{background:white;border-radius:20px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
-
-.card{
-  background:#f8fbff;
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:16px;
-  margin-bottom:14px;
-}
-
+.card{background:#f8fbff;border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:14px}
 h2{margin-top:0}
+
+/* VALUE BLOCK */
+.valuegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:10px}
+.value{background:white;border:1px solid var(--border);border-radius:14px;padding:14px}
+.value b{font-size:18px;color:var(--accent2)}
 
 /* MATCHING */
 .match{display:grid;gap:12px}
-.mrow{
-  display:grid;
-  grid-template-columns:1.4fr .8fr .6fr;
-  gap:12px;
-  background:white;
-  border:1px solid var(--border);
-  padding:14px;
-  border-radius:14px;
-}
+.mrow{display:grid;grid-template-columns:1.4fr .8fr .6fr;gap:12px;background:white;border:1px solid var(--border);padding:14px;border-radius:14px}
 @media(max-width:800px){.mrow{grid-template-columns:1fr}}
-
-.chip{
-  background:#eef6fb;
-  border:1px solid #d6e2f0;
-  padding:6px 10px;
-  border-radius:999px;
-  font-size:12px;
-  color:var(--accent2);
-  display:inline-block;
-  margin-top:4px;
-}
-
-.tag{
-  background:#e8f7fc;
-  border:1px solid #bfe7f2;
-  padding:6px 10px;
-  border-radius:999px;
-  font-size:12px;
-}
-
-/* CONTACT */
+.chip{background:#eef6fb;border:1px solid #d6e2f0;padding:6px 10px;border-radius:999px;font-size:12px;color:var(--accent2);display:inline-block;margin-top:4px}
+.tag{background:#e8f7fc;border:1px solid #bfe7f2;padding:6px 10px;border-radius:999px;font-size:12px}
 .contactline{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}
-.contactchip{
-  padding:6px 10px;
-  border-radius:999px;
-  background:#f3f7fb;
-  border:1px solid var(--border);
-  font-size:12px;
-}
+.contactchip{padding:6px 10px;border-radius:999px;background:#f3f7fb;border:1px solid var(--border);font-size:12px}
 .contactchip a{color:var(--accent2);text-decoration:none;font-weight:bold}
 
-/* ⭐ NURSELINE SPECIAL */
-.nurseline{
-  background:#f6f2ff;
-  border:1px solid #d9c9ff;
-}
-.nurseline .tag{
-  background:#efe7ff;
-  border-color:#d2bbff;
-  color:var(--nurse);
-}
-.nurseline .contactchip{
-  background:#f3eeff;
-  border-color:#d2bbff;
-}
+/* NURSELINE */
+.nurseline{background:#f6f2ff;border:1px solid #d9c9ff}
+.nurseline .tag{background:#efe7ff;border-color:#d2bbff;color:var(--nurse)}
+.nurseline .contactchip{background:#f3eeff;border-color:#d2bbff}
 </style>
 </head>
 
@@ -120,6 +56,19 @@ h2{margin-top:0}
 <a class="btn primary" href="#export">Export zorgplan</a>
 
 <div class="panel">
+
+<!-- ⭐ WHY HOSPITALS CARE -->
+<div class="card">
+<h2>Waarom ziekenhuizen Zorgstart willen</h2>
+Zorgstart versnelt ontslag en verbetert doorstroom. Minder ligdagen, minder druk op spoed en ontlasting van sociale diensten.
+
+<div class="valuegrid">
+<div class="value"><b>-0,5 tot -1 dag</b><br>Kortere ligduur</div>
+<div class="value"><b>Meer bedrotatie</b><br>Meer opnames met zelfde capaciteit</div>
+<div class="value"><b>Sociale dienst ontlast</b><br>Minder administratie</div>
+<div class="value"><b>Betere samenwerking</b><br>Sterkere brug naar eerste lijn</div>
+</div>
+</div>
 
 <!-- Intake -->
 <div class="card">
@@ -134,9 +83,9 @@ CROP-status: Grijze zone
 <div class="card">
 <h2>2. Zorgplan voorstel</h2>
 <ul>
-<li>Thuisverpleging: medicatie + wondzorg</li>
-<li>Kinesitherapie: mobiliteit en valpreventie</li>
-<li>Gezinszorg: ADL ondersteuning</li>
+<li>Thuisverpleging</li>
+<li>Kinesitherapie</li>
+<li>Gezinszorg</li>
 <li>Medicatieschema opvolging</li>
 </ul>
 </div>
@@ -147,60 +96,42 @@ CROP-status: Grijze zone
 
 <div class="match">
 
-<!-- thuisverpleging -->
 <div class="mrow">
-<div>
-<b>Thuisverpleging</b><br>
-<span class="chip">Regio 2000 • capaciteit OK</span>
-
+<div><b>Thuisverpleging</b><br><span class="chip">Regio 2000</span>
 <div class="contactline">
 <span class="contactchip"><a href="tel:+3230000000">+32 3 000 00 00</a></span>
 <span class="contactchip"><a href="mailto:zorgstart@altrio.be">zorgstart@altrio.be</a></span>
-</div>
-</div>
+</div></div>
 <div><span class="tag">Aanbevolen</span></div>
 <div><a class="btn" href="#export">Verwijs</a></div>
 </div>
 
-<!-- kine -->
 <div class="mrow">
-<div>
-<b>Kinesitherapie</b><br>
-<span class="chip">Geriatrie expertise</span>
+<div><b>Kinesitherapie</b><br><span class="chip">Geriatrie expertise</span>
 <div class="contactline">
 <span class="contactchip"><a href="tel:+32470000000">+32 470 00 00 00</a></span>
 <span class="contactchip"><a href="mailto:kine@voorbeeld.be">kine@voorbeeld.be</a></span>
-</div>
-</div>
+</div></div>
 <div><span class="tag">Top match</span></div>
 <div><a class="btn" href="#export">Contacteer</a></div>
 </div>
 
-<!-- gezinszorg -->
 <div class="mrow">
-<div>
-<b>Gezinszorg</b><br>
-<span class="chip">Wachttijd variabel</span>
+<div><b>Gezinszorg</b><br><span class="chip">Wachttijd variabel</span>
 <div class="contactline">
 <span class="contactchip"><a href="tel:+3211000000">+32 11 00 00 00</a></span>
 <span class="contactchip"><a href="mailto:gezinszorg@voorbeeld.be">gezinszorg@voorbeeld.be</a></span>
-</div>
-</div>
+</div></div>
 <div><span class="tag">Alternatief</span></div>
 <div><a class="btn" href="#export">Aanvraag</a></div>
 </div>
 
-<!-- ⭐ NURSELINE -->
 <div class="mrow nurseline">
-<div>
-<b>Zorgcoördinatie nodig?</b><br>
-<span class="chip">Zelf beperkt in tijd? Complex dossier?</span>
-
+<div><b>Zorgcoördinatie nodig?</b><br><span class="chip">Contacteer Nurseline</span>
 <div class="contactline">
 <span class="contactchip"><a href="tel:0800999999">0800 99 999</a></span>
 <span class="contactchip"><a href="mailto:zorgstart@zorgstart.be">zorgstart@zorgstart.be</a></span>
-</div>
-</div>
+</div></div>
 <div><span class="tag">Nurseline Zorgstart</span></div>
 <div><a class="btn primary" href="#export">Contacteer</a></div>
 </div>
