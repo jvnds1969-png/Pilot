@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zorgstart — Casus flow</title>
+  <style>
+    :root{
+      --bg:#f3f6fb; --card:#fff; --text:#0f253a; --muted:#5b6b7a;
+      --border:rgba(15,37,58,.10); --shadow:0 16px 40px rgba(15,37,58,.10);
+      --accent:#1faacd; --accent2:#165b72; --warm:#f97316; --ok:#22c55e;
+      --radius:18px; --max:980px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:var(--font); color:var(--text);
+      background:
+        radial-gradient(900px 450px at 12% -10%, rgba(31,170,205,.16), transparent 60%),
+        radial-gradient(800px 400px at 92% 0%, rgba(249,115,22,.12), transparent 55%),
+        linear-gradient(180deg,#eef3fb,var(--bg));
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:20px 18px 54px}
+    .topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px}
+    .btn{
+      display:inline-flex; align-items:center; gap:10px; padding:10px 12px; border-radius:14px;
+      border:1px solid rgba(15,37,58,.12); background:rgba(255,255,255,.85); font-size:13px;
+    }
+    .btn.primary{
+      background:linear-gradient(135deg,var(--accent),rgba(31,170,205,.65));
+      border-color:rgba(31,170,205,.35); color:#fff;
+      box-shadow:0 14px 26px rgba(31,170,205,.22);
+    }
+    .panel{
+      border:1px solid var(--border); border-radius:22px;
+      background:rgba(255,255,255,.82); box-shadow:var(--shadow); overflow:hidden;
+    }
+    .hd{
+      padding:16px 18px; border-bottom:1px solid var(--border);
+      background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(255,255,255,.72));
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+    }
+    .hd h1{margin:0; font-size:16px}
+    .meta{display:flex; flex-wrap:wrap; gap:8px}
+    .chip{
+      display:inline-flex; align-items:center; gap:8px; padding:8px 10px;
+      border-radius:999px; border:1px solid rgba(15,37,58,.10);
+      background:rgba(248,251,255,.78); font-size:12px; color:var(--muted);
+    }
+    .bd{padding:18px}
+    .grid{display:grid; grid-template-columns: 1fr; gap:14px}
+    .card{
+      border:1px solid rgba(15,37,58,.10); border-radius:18px;
+      background:rgba(248,251,255,.80); padding:14px;
+    }
+    .card h2{margin:0 0 6px; font-size:14px}
+    .card p{margin:0; color:var(--muted); font-size:13px; line-height:1.55}
+    .cols{display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:12px}
+    @media(max-width: 860px){ .cols{grid-template-columns:1fr} }
+    .field{
+      border:1px solid rgba(15,37,58,.10); background:rgba(255,255,255,.78);
+      border-radius:16px; padding:12px;
+    }
+    label{display:block; font-size:12px; color:var(--muted); margin-bottom:6px}
+    input, select{
+      width:100%; padding:10px 10px; border-radius:12px;
+      border:1px solid rgba(15,37,58,.14); background:#fff; color:var(--text);
+      font-size:13px;
+    }
+    .upload{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;
+      padding:12px; border-radius:16px; border:1px dashed rgba(15,37,58,.18);
+      background:rgba(255,255,255,.70);
+    }
+    .upload small{color:var(--muted)}
+    .steps{display:grid; gap:10px; margin-top:10px}
+    .step{
+      padding:12px; border-radius:16px; border:1px solid rgba(15,37,58,.10);
+      background:rgba(255,255,255,.78);
+      display:flex; gap:12px; align-items:flex-start;
+    }
+    .nr{
+      width:34px; height:34px; border-radius:14px; display:grid; place-items:center; font-weight:800; color:#fff;
+      background:linear-gradient(135deg,var(--accent),rgba(31,170,205,.55));
+      box-shadow:0 10px 18px rgba(31,170,205,.18);
+      flex:0 0 auto;
+    }
+    .risk{
+      font-weight:900; letter-spacing:.3px;
+      display:inline-block; padding:6px 10px; border-radius:999px;
+      border:1px solid rgba(15,37,58,.10); background:rgba(248,251,255,.78);
+    }
+    .risk.orange{color:#a04600; border-color:rgba(160,70,0,.25); background:rgba(249,115,22,.10)}
+    .bullets{margin:8px 0 0; padding-left:18px; font-size:13px; line-height:1.55}
+    .match{
+      display:grid; gap:10px; margin-top:10px;
+    }
+    .mrow{
+      display:grid; grid-template-columns: 1.2fr .8fr .6fr;
+      gap:10px; align-items:center;
+      padding:12px; border-radius:16px; border:1px solid rgba(15,37,58,.10);
+      background:rgba(255,255,255,.78);
+    }
+    @media(max-width: 860px){ .mrow{grid-template-columns:1fr} }
+    .tag{
+      display:inline-flex; align-items:center; gap:8px; padding:7px 10px;
+      border-radius:999px; border:1px solid rgba(31,170,205,.18);
+      background:rgba(31,170,205,.08); color:var(--accent2);
+      font-size:12px; width:fit-content;
+    }
+    .callout{
+      border-radius:18px; padding:14px; margin-top:10px;
+      border:1px solid rgba(34,197,94,.28); background:rgba(34,197,94,.08);
+      font-size:13px; line-height:1.55;
+    }
+    .footer{margin-top:12px; display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; color:var(--muted); font-size:12px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div style="display:flex; gap:10px; flex-wrap:wrap">
+        <a class="btn" href="app.html">← Dashboard</a>
+        <a class="btn" href="pilot.html">Pilootvoorstel</a>
+      </div>
+      <a class="btn primary" href="#export">Export zorgplan</a>
+    </div>
+
+    <section class="panel">
+      <div class="hd">
+        <div>
+          <h1>Casus — Mevr. Janssens (84)</h1>
+          <div class="meta">
+            <span class="chip">Afdeling: Geriatrie</span>
+            <span class="chip">Ontslag: naar thuis</span>
+            <span class="chip">Mantelzorg: beperkt</span>
+          </div>
+        </div>
+        <div class="meta">
+          <span class="risk orange">COMPLEXITEIT: ORANJE</span>
+        </div>
+      </div>
+
+      <div class="bd">
+        <div class="grid">
+
+          <!-- Intake -->
+          <div class="card" id="intake">
+            <h2>1) Intake</h2>
+            <p>Leg de basis vast. Zo kan de intelligentielaag documenten correct interpreteren en de juiste flow voorstellen.</p>
+
+            <div class="cols">
+              <div class="field">
+                <label>Patiënt</label>
+                <input value="Janssens, Maria — 84 jaar" />
+              </div>
+              <div class="field">
+                <label>Regio (postcode)</label>
+                <input value="2000" />
+              </div>
+              <div class="field">
+                <label>Ontslagdatum (indicatief)</label>
+                <input value="Maandag" />
+              </div>
+              <div class="field">
+                <label>CROP-status (indien relevant)</label>
+                <select>
+                  <option>Onbekend</option>
+                  <option selected>Grijze zone</option>
+                  <option>In aanmerking</option>
+                  <option>Niet in aanmerking</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="upload" style="margin-top:12px">
+              <div>
+                <b>Documenten</b><br/>
+                <small>Ontslagbrief, verpleegkundig verslag, medicatieschema…</small>
+              </div>
+              <div style="display:flex; gap:10px; flex-wrap:wrap">
+                <a class="btn" href="#analyse">Analyseer dossier</a>
+                <span class="tag">AI gebruikt documenten + lexicons</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Analyse -->
+          <div class="card" id="analyse">
+            <h2>2) Analyse (intelligentielaag)</h2>
+            <p>Documenten → gestructureerde zorginfo. Dit bespaart leestijd en maakt prioritering mogelijk.</p>
+
+            <div class="steps">
+              <div class="step">
+                <div class="nr">A</div>
+                <div>
+                  <b>Extractie uit documenten</b><br/>
+                  <span style="color:var(--muted); font-size:13px; line-height:1.55">
+                    Kerninfo wordt samengevat en omgezet naar herkenbare domeinen (medisch + sociaal).
+                  </span>
+                  <ul class="bullets">
+                    <li>Mobiliteit: valrisico, hulpmiddel</li>
+                    <li>Cognitie: kwetsbaarheid / geheugenproblemen</li>
+                    <li>Medicatie: polyfarmacie / complex schema</li>
+                    <li>Mantelzorg: beperkt</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="nr">T</div>
+                <div>
+                  <b>Triage & prioritering</b><br/>
+                  <span style="color:var(--muted); font-size:13px; line-height:1.55">
+                    Ontslagcomplexiteit-score (groen/oranje/rood) + verklarende factoren.
+                  </span>
+                  <div class="callout">
+                    <b>Waarom ORANJE?</b> combinatie van mobiliteitsrisico + medicatiecomplexiteit + beperkte mantelzorg.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Zorgplan -->
+          <div class="card" id="zorgplan">
+            <h2>3) Zorgplan (zorgbundels voorstellen)</h2>
+            <p>AI stelt bundels voor; sociale dienst past aan en bevestigt.</p>
+
+            <div class="cols">
+              <div class="field">
+                <label>Voorgestelde zorgbundel</label>
+                <input value="Kwetsbare geriatrische patiënt — thuis" />
+              </div>
+              <div class="field">
+                <label>Prioriteit</label>
+                <select>
+                  <option>Laag</option>
+                  <option selected>Normaal</option>
+                  <option>Hoog</option>
+                </select>
+              </div>
+            </div>
+
+            <ul class="bullets" style="margin-top:10px">
+              <li><b>Thuisverpleging:</b> medicatie-opvolging, wondcontrole (indien nodig)</li>
+              <li><b>Kinesitherapie:</b> mobiliteit/herstel + valpreventie</li>
+              <li><b>Gezinszorg:</b> ondersteuning ADL (afhankelijk van beschikbaarheid)</li>
+              <li><b>Medicatieschema:</b> check op begrijpelijkheid + opvolging</li>
+              <li><b>Casemanagement (optioneel):</b> bij verhoogde sociale kwetsbaarheid</li>
+            </ul>
+
+            <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+              <a class="btn" href="#matching">Ga naar matching</a>
+              <span class="tag">Mens beslist — tool ondersteunt</span>
+            </div>
+          </div>
+
+          <!-- Matching -->
+          <div class="card" id="matching">
+            <h2>4) Matching (basis v1)</h2>
+            <p>Geen complexe marketplace in v1: wél een slim, gestructureerd doorverwijs-overzicht per zorgbundel.</p>
+
+            <div class="match">
+              <div class="mrow">
+                <div>
+                  <b>Thuisverpleging</b><br/>
+                  <span class="chip">regio 2000 • capaciteit: OK</span>
+                </div>
+                <div><span class="tag">Aanbevolen: Altrio</span></div>
+                <div><a class="btn" href="#export">Verwijs door</a></div>
+              </div>
+
+              <div class="mrow">
+                <div>
+                  <b>Kinesitherapie</b><br/>
+                  <span class="chip">regio 2000 • specialisatie: geriatrie</span>
+                </div>
+                <div><span class="tag">Top 3 opties</span></div>
+                <div><a class="btn" href="#export">Contacteer</a></div>
+              </div>
+
+              <div class="mrow">
+                <div>
+                  <b>Gezinszorg</b><br/>
+                  <span class="chip">wachttijd: variabel</span>
+                </div>
+                <div><span class="tag">Alternatief voorstel</span></div>
+                <div><a class="btn" href="#export">Aanvraag</a></div>
+              </div>
+            </div>
+
+            <div class="callout">
+              <b>Intelligentie in matching (v1):</b> selectie op regio + zorgtype + (optioneel) competenties.  
+              <br/>Later (v2): realtime beschikbaarheid + SLA’s + feedbackloop.
+            </div>
+          </div>
+
+          <!-- Export -->
+          <div class="card" id="export">
+            <h2>5) Export & communicatie</h2>
+            <p>Bundel alles in één duidelijke output: zorgplan + afspraken + contactpersonen. Klaar om te delen met patiënt/naasten en eerstelijnspartners.</p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
+              <a class="btn primary" href="#">Genereer PDF zorgplan</a>
+              <a class="btn" href="#">Mail naar partners</a>
+              <a class="btn" href="#">Opslaan in dossier</a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="footer">
+          <span>Dit is een mock: focus op flow & look-and-feel.</span>
+          <span>Tip: koppel dit later aan echte data/OnePatient/Bingli.</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
