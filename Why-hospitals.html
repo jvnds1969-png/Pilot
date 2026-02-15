@@ -1,370 +1,277 @@
-<!--
-Maak een NIEUWE pagina: why-hospitals.html
-Plaats dit bestand naast index.html / pilot.html / app.html / case.html
-En voeg in index.html een link toe: href="why-hospitals.html"
--->
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Zorgstart — Why hospitals care</title>
-  <meta name="description" content="Zorgstart: strategische waarde voor ziekenhuizen (ligduur, bedrotatie, sociale dienst, eerste lijn)." />
-
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Zorgstart — Strategische nota (voor Erwin)</title>
   <style>
     :root{
-      --bg:#f3f6fb; --text:#0f253a; --muted:#5b6b7a;
-      --border:rgba(15,37,58,.10); --shadow:0 16px 40px rgba(15,37,58,.10);
-      --accent:#1faacd; --accent2:#165b72; --warm:#f97316; --ok:#22c55e;
-      --radius:18px; --max:1120px;
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --text:#0f253a;
+      --muted:#5b6b7a;
+      --line:rgba(15,37,58,.10);
+      --accent:#1faacd;       /* ziekenhuis-blauw */
+      --accent2:#165b72;      /* diep blauwgroen */
+      --warm:#f97316;         /* energie */
+      --ok:#22c55e;           /* positief */
+      --nurse:#7c3aed;        /* zorgprofessionals */
+      --shadow: 0 12px 40px rgba(15,37,58,.10);
+      --r:18px;
     }
     *{box-sizing:border-box}
     body{
-      margin:0; font-family:var(--font); color:var(--text);
-      background:
-        radial-gradient(900px 450px at 12% -10%, rgba(31,170,205,.16), transparent 60%),
-        radial-gradient(800px 400px at 92% 0%, rgba(249,115,22,.12), transparent 55%),
-        linear-gradient(180deg,#eef3fb,var(--bg));
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(31,170,205,.18), transparent 55%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(249,115,22,.12), transparent 60%),
+                  var(--bg);
+      line-height:1.45;
     }
-    a{color:inherit;text-decoration:none}
-    .wrap{max-width:var(--max); margin:0 auto; padding:26px 18px 54px}
-
-    /* Topbar */
-    .topbar{display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:16px; flex-wrap:wrap}
-    .brand{
-      display:flex; align-items:center; gap:12px;
-      padding:10px 12px; border:1px solid var(--border); border-radius:999px;
-      background:rgba(255,255,255,.65); backdrop-filter: blur(8px);
-    }
+    .wrap{max-width:1100px;margin:0 auto;padding:26px 18px 64px}
+    .topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:18px}
+    .brand{display:flex;gap:10px;align-items:center}
     .logo{
-      width:34px; height:34px; border-radius:10px; position:relative;
-      background:linear-gradient(135deg,var(--accent),rgba(31,170,205,.35));
-      box-shadow:0 10px 20px rgba(31,170,205,.25);
+      width:42px;height:42px;border-radius:14px;background:
+        linear-gradient(135deg, var(--accent) 0%, var(--accent2) 70%);
+      box-shadow: var(--shadow);
+      display:grid;place-items:center;color:#fff;font-weight:800;
     }
-    .logo:after{content:""; position:absolute; inset:9px; border-radius:8px; border:2px solid rgba(255,255,255,.85)}
-    .brand strong{font-size:14px}
-    .brand span{display:block; font-size:12px; color:var(--muted); margin-top:1px}
-
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:10px 12px; border-radius:999px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.65);
-      font-size:12px; color:var(--muted);
-      white-space:nowrap;
+    .badge{
+      display:inline-flex;gap:8px;align-items:center;
+      padding:8px 12px;border:1px solid var(--line);border-radius:999px;
+      background:rgba(255,255,255,.75);backdrop-filter: blur(6px);
+      font-size:12px;color:var(--muted)
     }
-    .dot{width:9px;height:9px;border-radius:999px;background:var(--ok);box-shadow:0 0 0 5px rgba(34,197,94,.14)}
-
-    /* Layout */
-    .grid{
-      display:grid;
-      grid-template-columns: 300px 1fr;
-      gap:16px;
-      align-items:start;
-    }
-    @media(max-width: 980px){ .grid{grid-template-columns:1fr;} }
-
-    /* Sidebar */
-    .sidebar{
-      border:1px solid var(--border);
-      border-radius:22px;
-      background:rgba(255,255,255,.70);
-      backdrop-filter: blur(8px);
-      box-shadow:0 12px 28px rgba(15,37,58,.06);
-      padding:14px;
-      position: sticky;
-      top: 12px;
-      height: fit-content;
-    }
-    .navtitle{
-      font-size:12px; color:var(--muted);
-      margin: 4px 6px 10px;
-      letter-spacing:.2px; text-transform: uppercase;
-    }
-    .nav{display:grid; gap:8px}
-    .nav a{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      padding:10px 12px; border-radius:14px;
-      border:1px solid rgba(15,37,58,.10);
-      background:rgba(248,251,255,.78);
-      font-size:13px;
-    }
-    .nav small{color:var(--muted)}
-    .arrow{
-      width:28px;height:28px;border-radius:12px; display:grid; place-items:center;
-      background:rgba(31,170,205,.10);
-      border:1px solid rgba(31,170,205,.18);
-      color:var(--accent2);
-      flex:0 0 auto;
-    }
-    .hint{
-      margin-top:12px; padding:12px; border-radius:16px;
-      border:1px solid rgba(31,170,205,.18); background:rgba(31,170,205,.08);
-      color:var(--accent2); font-size:12.6px; line-height:1.45;
-    }
-
-    /* Main card */
-    .card{
-      border:1px solid var(--border);
-      border-radius:22px;
-      background:rgba(255,255,255,.82);
-      box-shadow:var(--shadow);
+    .hero{
+      position:relative;
+      border:1px solid var(--line);
+      background: linear-gradient(135deg, rgba(31,170,205,.18) 0%, rgba(22,91,114,.10) 45%, rgba(255,255,255,.92) 100%);
+      border-radius: calc(var(--r) + 8px);
+      padding:22px 22px 16px;
+      box-shadow: var(--shadow);
       overflow:hidden;
     }
-    .hd{
-      padding:18px; border-bottom:1px solid var(--border);
-      background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(255,255,255,.72));
-      display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+    .hero h1{margin:0 0 8px;font-size:28px;letter-spacing:-.02em}
+    .hero p{margin:0;color:var(--muted);max-width:80ch}
+    .hero .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .chip{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.8);
+      font-size:12px;color:var(--muted)
     }
-    .hd h1{margin:0; font-size:18px; letter-spacing:-.2px}
-    .tag{
-      font-size:12px; padding:7px 10px; border-radius:999px;
-      background:rgba(249,115,22,.10); border:1px solid rgba(249,115,22,.20);
-      color:#8a3b02; white-space:nowrap;
-    }
-    .bd{padding:18px}
+    .dot{width:8px;height:8px;border-radius:50%}
+    .grid{display:grid;gap:14px;margin-top:16px}
+    @media (min-width: 920px){ .grid{grid-template-columns: 1.2fr .8fr} }
 
-    /* Sections */
-    .section{margin-top:14px}
-    .section h2{
-      margin:0 0 8px;
-      font-size:13px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      color:var(--accent2);
+    .card{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.92);
+      border-radius: var(--r);
+      box-shadow: 0 10px 28px rgba(15,37,58,.07);
+      padding:16px 16px 14px;
     }
-    .lead{
-      margin:0;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.6;
-      max-width:78ch;
-    }
+    .card h2{margin:0 0 8px;font-size:16px}
+    .card p{margin:0;color:var(--muted)}
+    .kpiRow{display:grid;gap:10px;margin-top:12px}
+    @media (min-width: 920px){ .kpiRow{grid-template-columns: repeat(3, 1fr)} }
 
-    .cards{
-      display:grid;
-      grid-template-columns: repeat(2,1fr);
-      gap:12px;
-      margin-top:12px;
-    }
-    @media(max-width: 980px){ .cards{grid-template-columns:1fr;} }
-    .kcard{
-      border:1px solid rgba(15,37,58,.10);
-      background:rgba(248,251,255,.80);
-      border-radius:18px;
-      padding:14px;
-    }
-    .kcard h3{margin:0 0 6px; font-size:14px}
-    .kcard p{margin:0; color:var(--muted); font-size:13px; line-height:1.55}
-    .bullets{margin:10px 0 0; padding-left:18px; font-size:13px; line-height:1.55}
-
-    .impact{
-      display:grid;
-      grid-template-columns: repeat(3,1fr);
-      gap:10px;
-      margin-top:12px;
-    }
-    @media(max-width: 980px){ .impact{grid-template-columns:1fr;} }
-    .ibox{
-      border:1px solid rgba(34,197,94,.28);
-      background:rgba(34,197,94,.08);
-      border-radius:18px;
-      padding:14px;
-    }
-    .ibox b{display:block; margin-bottom:6px}
-    .ibox .big{font-size:18px; font-weight:900; letter-spacing:-.2px}
-    .ibox small{color:var(--muted)}
-
-    .table{
-      display:grid;
-      gap:10px;
-      margin-top:12px;
-    }
-    .row{
-      display:grid;
-      grid-template-columns: 1.1fr 1.9fr;
-      gap:10px;
+    .kpi{
+      border:1px solid var(--line);
+      border-radius:14px;
       padding:12px;
-      border-radius:18px;
-      border:1px solid rgba(15,37,58,.10);
-      background:rgba(255,255,255,.78);
+      background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.75));
     }
-    @media(max-width: 980px){ .row{grid-template-columns:1fr;} }
-    .row b{font-size:13px}
-    .row span{color:var(--muted); font-size:13px; line-height:1.55}
+    .kpi .v{font-size:18px;font-weight:800}
+    .kpi .l{font-size:12px;color:var(--muted);margin-top:2px}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;font-size:12px;
+      border:1px solid var(--line);background:#fff;color:var(--muted)
+    }
+    .pill strong{color:var(--text)}
+    .twoCol{display:grid;gap:14px;margin-top:14px}
+    @media (min-width: 920px){ .twoCol{grid-template-columns: 1fr 1fr} }
+
+    .list{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+    .li{display:flex;gap:10px;align-items:flex-start}
+    .ico{
+      width:28px;height:28px;border-radius:10px;
+      border:1px solid var(--line);
+      display:grid;place-items:center;background:#fff;flex:0 0 auto;
+    }
+    .li b{display:block}
+    .li span{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+
+    .levels{display:grid;gap:10px;margin-top:10px}
+    .lvl{
+      border:1px solid var(--line);
+      border-radius: 16px;
+      padding:12px;
+      background: rgba(255,255,255,.85);
+    }
+    .lvlHead{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .lvlHead .t{font-weight:800}
+    .lvlHead .tag{font-size:12px;color:var(--muted)}
+    .lvl p{margin:8px 0 0;color:var(--muted);font-size:13px}
 
     .footer{
-      margin-top:16px;
-      display:flex; flex-wrap:wrap; gap:10px;
-      align-items:center; justify-content:space-between;
-      color:var(--muted); font-size:12px;
-      padding:8px 2px;
+      margin-top:18px;
+      display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
+      color:var(--muted);font-size:12px
     }
     .btn{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:10px 12px; border-radius:14px;
-      border:1px solid rgba(15,37,58,.12);
-      background:rgba(255,255,255,.85);
-      font-size:13px;
+      display:inline-flex;align-items:center;gap:10px;
+      padding:10px 12px;border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff;text-decoration:none;color:var(--text);
+      box-shadow: 0 8px 20px rgba(15,37,58,.06);
+      font-size:13px;font-weight:700;
     }
-    .btn.primary{
-      background:linear-gradient(135deg,var(--accent),rgba(31,170,205,.65));
-      border-color:rgba(31,170,205,.35);
-      color:#fff;
+    .btn .spark{width:10px;height:10px;border-radius:50%;background:var(--accent)}
+    .btn.secondary .spark{background:var(--warm)}
+    .callout{
+      border:1px dashed rgba(31,170,205,.45);
+      background: linear-gradient(135deg, rgba(31,170,205,.10), rgba(255,255,255,.85));
+      border-radius: 16px;
+      padding:12px;
+      margin-top:12px;
     }
+    .callout b{display:block;margin-bottom:4px}
+    .callout p{margin:0;color:var(--muted);font-size:13px}
   </style>
 </head>
-
 <body>
   <div class="wrap">
-
     <div class="topbar">
-      <a class="brand" href="index.html">
-        <div class="logo" aria-hidden="true"></div>
+      <div class="brand">
+        <div class="logo">ZS</div>
         <div>
-          <strong>Zorgstart</strong>
-          <span>Why hospitals care</span>
+          <div style="font-weight:900;letter-spacing:-.02em">Zorgstart</div>
+          <div style="font-size:12px;color:var(--muted)">Strategische nota — meeting met Erwin (16/02/2026)</div>
         </div>
-      </a>
-      <div class="pill"><span class="dot" aria-hidden="true"></span>Doorstroom • ligduur • eerste lijn</div>
+      </div>
+      <div class="badge">
+        <span class="dot" style="background:var(--ok)"></span>
+        <span>Zakelijk • uitnodigend • ziekenhuis-touch</span>
+      </div>
     </div>
+
+    <section class="hero">
+      <div class="badge" style="margin-bottom:10px">
+        <span class="dot" style="background:var(--accent)"></span>
+        <span>Doel: ontslag versnellen + matching verbeteren (human-in-the-loop)</span>
+      </div>
+
+      <h1>Van ontslagdruk naar sociaal haalbaar ontslag — met meetbare impact</h1>
+      <p>
+        Zorgstart start pragmatisch bij de ontslagbrief en vertaalt die naar een gestructureerd takenpakket,
+        gecontroleerd door de sociale dienst en gepubliceerd als draft op Flexizorg.
+        Zo verschuift tijd van knip-&-plak naar begeleiding en complex casemanagement.
+      </p>
+
+      <div class="meta">
+        <span class="chip"><span class="dot" style="background:var(--warm)"></span>Focus: bottlenecks eerste lijn</span>
+        <span class="chip"><span class="dot" style="background:var(--accent2)"></span>Standaardisatie & digitalisering</span>
+        <span class="chip"><span class="dot" style="background:var(--nurse)"></span>Matching: capaciteit • expertise • regio</span>
+      </div>
+    </section>
 
     <div class="grid">
-      <!-- Sidebar nav -->
-      <aside class="sidebar">
-        <div class="navtitle">Navigatie</div>
-        <nav class="nav" aria-label="Zorgstart pagina’s">
-          <a href="index.html"><div><b>Home</b><br><small>Overzicht</small></div><div class="arrow">↗</div></a>
-          <a href="why-hospitals.html"><div><b>Why hospitals care</b><br><small>Waarde</small></div><div class="arrow">↗</div></a>
-          <a href="pilot.html"><div><b>Pilootvoorstel</b><br><small>One-pager</small></div><div class="arrow">↗</div></a>
-          <a href="app.html"><div><b>Platform mock</b><br><small>Dashboard</small></div><div class="arrow">↗</div></a>
-          <a href="case.html"><div><b>Casus flow</b><br><small>Intake → matching</small></div><div class="arrow">↗</div></a>
-        </nav>
+      <section class="card">
+        <h2>Wat we uit de interviews meenemen</h2>
+        <p>De werking functioneert, maar vertoont structurele spanningen bij stijgende complexiteit en verkorte ligduur.</p>
 
-        <div class="hint">
-          <b>Gebruik in overleg:</b> start hier (waarde), ga dan naar <b>Piloot</b>, en eindig met de <b>Platform mock</b>.
+        <ul class="list">
+          <li class="li">
+            <div class="ico">⏱️</div>
+            <div>
+              <b>Druk tot versneld ontslag</b>
+              <span>Medisch ontslagbaar ≠ sociaal haalbaar. Frictie ontstaat als planning te laat start.</span>
+            </div>
+          </li>
+          <li class="li">
+            <div class="ico">🧩</div>
+            <div>
+              <b>Bottleneck: gezinszorg & capaciteit in eerste lijn</b>
+              <span>Onzekerheid: “is er hulp aanwezig of niet?” leidt tot telefonie en vertraging.</span>
+            </div>
+          </li>
+          <li class="li">
+            <div class="ico">📄</div>
+            <div>
+              <b>Variabele ontslagbrieven</b>
+              <span>Niet-uniform; sociale context ontbreekt geregeld → extra afstemming.</span>
+            </div>
+          </li>
+        </ul>
+
+        <div class="callout">
+          <b>Positionering (belangrijk)</b>
+          <p>Geen vervanging van sociaal werk. Wel: administratieve triage versnellen, mét verplichte menselijke goedkeuring.</p>
+        </div>
+
+        <div class="kpiRow">
+          <div class="kpi">
+            <div class="v">30–60%</div>
+            <div class="l">minder triage-tijd (doel, afhankelijk startpunt)</div>
+          </div>
+          <div class="kpi">
+            <div class="v">Sneller</div>
+            <div class="l">publicatie zorgtaken → minder doorlooptijd bij discharge</div>
+          </div>
+          <div class="kpi">
+            <div class="v">Audit trail</div>
+            <div class="l">wie keurde wat goed, wanneer, met bronpassage</div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="card">
+        <h2>Beslissingen voor morgen</h2>
+        <p>Klein starten, groot leren. 1 pilootafdeling, duidelijke KPI’s, korte feedbackloop.</p>
+
+        <div style="margin-top:10px;display:grid;gap:10px">
+          <div class="pill"><strong>1.</strong> Pilootafdeling (Geriatrie / Reva / Ortho gepland)</div>
+          <div class="pill"><strong>2.</strong> SPOC sociale dienst + review-afspraken</div>
+          <div class="pill"><strong>3.</strong> KPI’s: triage-tijd, doorlooptijd, acceptatie, fill-rate</div>
+          <div class="pill"><strong>4.</strong> Privacy/consent randvoorwaarden voor pilootdata</div>
+        </div>
+
+        <div style="margin-top:14px">
+          <h2>Strategische evolutie (4 niveaus)</h2>
+          <div class="levels">
+            <div class="lvl">
+              <div class="lvlHead"><span class="t">1) Operationele optimalisatie</span><span class="tag">nu</span></div>
+              <p>Standaardisatie intake/triage → meer tijd voor begeleiding & complex casemanagement.</p>
+            </div>
+            <div class="lvl">
+              <div class="lvlHead"><span class="t">2) CROP + instroomstrategie</span><span class="tag">na bewezen V1</span></div>
+              <p>Grijze zone beter selecteren en planbaar maken met transmurale matching.</p>
+            </div>
+            <div class="lvl">
+              <div class="lvlHead"><span class="t">3) Dynamisch matchingplatform</span><span class="tag">opschalen</span></div>
+              <p>Realtime beschikbaarheid/competentie/regionale dekking → minder telefonie.</p>
+            </div>
+            <div class="lvl">
+              <div class="lvlHead"><span class="t">4) Patiëntwaarde (zorgplan)</span><span class="tag">maturiteit</span></div>
+              <p>Optimalisatie en transparantie voor patiënt + continuïteit van zorg.</p>
+            </div>
+          </div>
         </div>
       </aside>
-
-      <!-- Main content -->
-      <main class="card">
-        <div class="hd">
-          <h1>Waarom ziekenhuizen Zorgstart willen</h1>
-          <span class="tag">bestuurstaal • direct impact</span>
-        </div>
-
-        <div class="bd">
-          <div class="section">
-            <h2>De uitdaging</h2>
-            <p class="lead">
-              Ziekenhuizen ervaren structurele druk op capaciteit: patiënten blijven te lang liggen omdat ontslag naar huis
-              organisatorisch vastloopt. Sociale diensten zitten op limiet, doorverwijzing naar eerste lijn verloopt manueel
-              en doorstroom (incl. spoed) blokkeert.
-            </p>
-          </div>
-
-          <div class="section">
-            <h2>Zorgstart in één zin</h2>
-            <p class="lead">
-              Zorgstart digitaliseert en versnelt het ontslagproces naar de eerste lijn: documenten → triage → zorgbundels → matching → doorverwijzing.
-              <b>Mens beslist, tool ondersteunt.</b>
-            </p>
-          </div>
-
-          <div class="section">
-            <h2>Wat verandert concreet?</h2>
-            <div class="cards">
-              <div class="kcard">
-                <h3>Vandaag</h3>
-                <p>Veel tijd gaat naar administratieve coördinatie.</p>
-                <ul class="bullets">
-                  <li>dossiers lezen</li>
-                  <li>bellen en mailen</li>
-                  <li>wachten & opvolgen</li>
-                  <li>zorg zoeken per patiënt</li>
-                </ul>
-              </div>
-              <div class="kcard">
-                <h3>Met Zorgstart</h3>
-                <p>Gestandaardiseerd proces met digitale ondersteuning.</p>
-                <ul class="bullets">
-                  <li>upload bestaande documenten</li>
-                  <li>automatische analyse & triage</li>
-                  <li>zorgbundels & matching</li>
-                  <li>snelle doorverwijzing</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="section">
-            <h2>Strategische impact</h2>
-            <div class="impact">
-              <div class="ibox">
-                <b>Kortere ligduur</b>
-                <div class="big">–0,5 tot –1 dag</div>
-                <small>voor geselecteerde doelgroep</small>
-              </div>
-              <div class="ibox">
-                <b>Hogere bedrotatie</b>
-                <div class="big">meer opnames</div>
-                <small>zonder extra bedden</small>
-              </div>
-              <div class="ibox">
-                <b>Sociale dienst ontlast</b>
-                <div class="big">focus shift</div>
-                <small>naar complex casemanagement</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="section">
-            <h2>Waarop sturen we?</h2>
-            <div class="table">
-              <div class="row">
-                <b>Doorstroom & spoed</b>
-                <span>sneller ontslag → bed vrij → minder boarding → betere flow</span>
-              </div>
-              <div class="row">
-                <b>Efficiëntie sociale dienst</b>
-                <span>minder manueel werk; meer tijd voor psychosociale begeleiding en complexe dossiers</span>
-              </div>
-              <div class="row">
-                <b>Samenwerking eerste lijn</b>
-                <span>één duidelijk zorgplan + contactpersonen + korte doorverwijslijnen</span>
-              </div>
-              <div class="row">
-                <b>Transmurale & geïntegreerde zorg</b>
-                <span>digitale brug die past binnen transmurale zorgpaden en geïntegreerde zorg</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="section">
-            <h2>Pilootopzet Vlaanderen</h2>
-            <div class="kcard">
-              <p style="margin:0; color:var(--muted); font-size:13px; line-height:1.55">
-                Netwerk van referentieziekenhuizen (1 per provincie): <b>ZAS</b> (Antwerpen), <b>VITAZ</b> (Oost-Vlaanderen),
-                <b>AZ Oostende</b> (West-Vlaanderen), <b>ZOL</b> (Limburg), <b>RZ Tienen</b> (Vlaams-Brabant).<br/>
-                Startdiensten: <b>geriatrie</b>, <b>orthopedie</b>, <b>revalidatie</b>.
-              </p>
-            </div>
-          </div>
-
-          <div class="footer">
-            <span>Volgende: koppel dit aan je pilootpagina + platform demo.</span>
-            <div style="display:flex; gap:10px; flex-wrap:wrap">
-              <a class="btn" href="pilot.html">Ga naar pilootvoorstel →</a>
-              <a class="btn primary" href="app.html">Open platform mock →</a>
-            </div>
-          </div>
-
-        </div>
-      </main>
     </div>
 
+    <div class="footer">
+      <div>© Zorgstart — voorbereid voor overleg • versie 0.9</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" href="v1-ontwikkeling.html"><span class="spark"></span>Bekijk V1 ontwikkeling</a>
+        <a class="btn secondary" href="#" onclick="window.print();return false;"><span class="spark"></span>Print/PDF</a>
+      </div>
+    </div>
   </div>
 </body>
 </html>
